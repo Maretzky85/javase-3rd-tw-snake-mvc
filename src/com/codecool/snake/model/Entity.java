@@ -8,17 +8,17 @@ import static com.codecool.snake.common.Config.SNAKE_SPEED;
 public class Entity extends ObservableEntity {
     private GameEntityType entityType;
     private boolean alive;
-    private Bounds bound;
+    private Shape bound;
     private int angle,
             speed = SNAKE_SPEED;
 
     public Entity() {
         this.alive = true;
-        this.bound = new Bounds(-100, -100, 0);
+        this.bound = new Shape(-100, -100, 0);
         this.angle = 0;
     }
 
-    public Entity(Bounds bound){
+    public Entity(Shape bound) {
         this.alive = true;
         this.bound = bound;
         this.angle = 0;
@@ -28,7 +28,7 @@ public class Entity extends ObservableEntity {
         return entityType;
     }
 
-    public Bounds getBounds() {
+    public Shape getShape() {
         return this.bound;
     }
 
@@ -36,27 +36,27 @@ public class Entity extends ObservableEntity {
         return this.angle;
     }
 
-    public void setEntityType(GameEntityType entityType) {
+    protected void setEntityType(GameEntityType entityType) {
         this.entityType = entityType;
     }
 
-    public void setBounds(Bounds newBounds) {
-        this.bound = newBounds;
+    void setBounds(Shape newShape) {
+        this.bound = newShape;
     }
 
-    public void setAngle(int angle) {
+    void setAngle(int angle) {
         this.angle = angle;
     }
 
-    public void setSpeed(int speed) {
+    void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
-    public void rotate(int rotateBy) {
+    protected void rotate(int rotateBy) {
         this.angle += rotateBy;
     }
 

@@ -18,10 +18,12 @@ public class GameController {
         model.firstSpawn();
 
         loop.setDaemon(true);
-        loop.start();
     }
 
 
+    public void startLoop() {
+        loop.start();
+    }
 
     public void handleOnKeyPressed(KeyEvent event){
         model.interpretPressEvent(event);
@@ -30,9 +32,10 @@ public class GameController {
         model.interpretReleaseEvent();
     }
     public void handleOnAppClose() {
-        loop.stop();
+        loop.toggleLoopState();
     }
-    void updateModel(){
+
+    private void updateModel() {
         model.updateModel();
     }
 
