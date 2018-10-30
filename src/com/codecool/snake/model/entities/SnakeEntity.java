@@ -1,21 +1,23 @@
 package com.codecool.snake.model.entities;
 
-import com.codecool.snake.model.Bounds;
-import com.codecool.snake.model.Direction;
 import com.codecool.snake.model.Entity;
+import com.codecool.snake.model.Shape;
 import com.codecool.snake.model.common.GameEntityType;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.ArrayList;
+import java.util.Deque;
 
 import static com.codecool.snake.common.Config.ROTATE_SPEED;
 
+enum Direction {
+    LEFT, RIGHT, CENTER
+}
+
 public class SnakeEntity extends Entity {
-    private Deque<Bounds> tail = new ArrayDeque<>();
+    private Deque<Shape> tail = new ArrayDeque<>();
     private Direction turnDirection = Direction.CENTER;
 
     public SnakeEntity(int initialSize) {
@@ -23,7 +25,7 @@ public class SnakeEntity extends Entity {
         this.setEntityType(GameEntityType.SNAKE);
 
         for(int i = initialSize; i > 0; --i) {
-            Bounds newPart = getBounds().cloneBound();
+            Shape newPart = getShape().cloneShape();
             tail.addLast(newPart);
         }
     }
@@ -41,13 +43,13 @@ public class SnakeEntity extends Entity {
                 break;
         }
 
-        tail.add(getBounds().cloneBound());
+        tail.add(getShape().cloneShape());
         tail.poll();
         super.movement();
     }
 
     public boolean isCollideWith(Entity collider) {
-        return collider.getBounds().intersectWith(this.getBounds());
+        return collider.getShape().intersectWith(this.getShape());
     }
 
     public void interactWith(Entity otherGameObject) {
@@ -57,7 +59,8 @@ public class SnakeEntity extends Entity {
                 eat(otherGameObject);
                 break;
             case ENEMY:
-                kill(otherGameObject);
+                kill(this);
+//                kill(otherGameObject);
                 break;
         }
     }
@@ -65,7 +68,7 @@ public class SnakeEntity extends Entity {
     private void eat(Entity edibleEntity) {
         System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
 
-        tail.addFirst(getBounds().cloneBound());
+        tail.addFirst(getShape().cloneShape());
         edibleEntity.death();
     }
 
@@ -75,12 +78,12 @@ public class SnakeEntity extends Entity {
         killableEntity.death();
     }
 
-    public ArrayList<Bounds> getSnakeBounds(){
-        ArrayList<Bounds> snakeBounds = new ArrayList<>();
-        snakeBounds.add(getBounds());
-        snakeBounds.addAll(tail);
+    public ArrayList<Shape> getSnakeShape() {
+        ArrayList<Shape> snakeShape = new ArrayList<>();
+        snakeShape.add(getShape());
+        snakeShape.addAll(tail);
 
-        return snakeBounds;
+        return snakeShape;
     }
 
     public void interpretPressEvent(KeyEvent event) {

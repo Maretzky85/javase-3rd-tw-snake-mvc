@@ -8,7 +8,9 @@ import com.codecool.snake.model.entities.PowerupEntity;
 import com.codecool.snake.model.entities.SnakeEntity;
 import javafx.scene.input.KeyEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 public class GameModel extends ObservableModel {
     private final int FULL_ANGLE = 360;
@@ -111,7 +113,7 @@ public class GameModel extends ObservableModel {
         }
 
         if(entity != null) {
-            entity.setBounds(Bounds.getRandomBound());
+            entity.setBounds(Shape.getRandomBound());
             entity.setAngle(Config.RANDOMIZER.apply(FULL_ANGLE));
 
             gameEntities.add(entity);
@@ -124,7 +126,7 @@ public class GameModel extends ObservableModel {
     }
 
     private boolean isOutOfArenaBounds(Entity entity) {
-        Bounds bound = entity.getBounds();
+        Shape bound = entity.getShape();
 
         return  bound.getX() < 0 || Config.ARENA_WIDTH < bound.getX() ||
                 bound.getY() < 0 || Config.ARENA_HEIGHT < bound.getY();

@@ -21,6 +21,7 @@ public class App extends Application {
         model.addObserver(view);
 
         GameController gameController = new GameController(model, view);
+        gameController.startLoop();
     }
 
 }

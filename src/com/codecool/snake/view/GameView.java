@@ -1,11 +1,11 @@
 package com.codecool.snake.view;
 
 import com.codecool.snake.common.Config;
+import com.codecool.snake.controller.GameController;
+import com.codecool.snake.model.Entity;
 import com.codecool.snake.model.common.EntityObserver;
 import com.codecool.snake.model.common.GameEntityType;
 import com.codecool.snake.model.common.ModelObserver;
-import com.codecool.snake.controller.GameController;
-import com.codecool.snake.model.Entity;
 import com.codecool.snake.view.entities.EntityView;
 import com.codecool.snake.view.entities.SnakeView;
 import javafx.application.Platform;
@@ -30,9 +30,9 @@ public class GameView extends Pane implements ModelObserver {
     }
 
     @Override
-    public void updateOnSpawn(Entity spawnEntity) {
+    public void updateOnSpawn(Entity createdEntity) {
         Group entity = new Group();
-        switch (spawnEntity.getEntityType()){
+        switch (createdEntity.getEntityType()) {
             case ENEMY:
                 entity = new EntityView(costumes.get(GameEntityType.ENEMY));
                 break;
@@ -43,8 +43,8 @@ public class GameView extends Pane implements ModelObserver {
                 entity = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
                 break;
         }
-        spawnEntity.addObserver((EntityObserver) entity);
-        entitiesOnScene.put(spawnEntity.toString(), entity);
+        createdEntity.addObserver((EntityObserver) entity);
+        entitiesOnScene.put(createdEntity.toString(), entity);
         getChildren().add(entity);
     }
 

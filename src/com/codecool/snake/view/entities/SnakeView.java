@@ -1,8 +1,8 @@
 package com.codecool.snake.view.entities;
 
-import com.codecool.snake.model.common.EntityObserver;
 import com.codecool.snake.model.Entity;
-import com.codecool.snake.model.Bounds;
+import com.codecool.snake.model.Shape;
+import com.codecool.snake.model.common.EntityObserver;
 import com.codecool.snake.model.entities.SnakeEntity;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -25,7 +25,7 @@ public class SnakeView extends Group implements EntityObserver {
         getChildren().add(this.head);
     }
 
-    private void setPartBounds(Node part, Bounds bound) {
+    private void setPartBounds(Node part, Shape bound) {
         part.setLayoutX(bound.getX());
         part.setLayoutY(bound.getY());
     }
@@ -34,7 +34,7 @@ public class SnakeView extends Group implements EntityObserver {
     @Override
     public void updateOnChange(Entity changedEntity) {
         Platform.runLater(() -> {
-            Iterator<Bounds> snakeBounds = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
+            Iterator<Shape> snakeBounds = ((SnakeEntity) changedEntity).getSnakeShape().iterator();
 
 
             getChildren().listIterator().forEachRemaining(part -> {

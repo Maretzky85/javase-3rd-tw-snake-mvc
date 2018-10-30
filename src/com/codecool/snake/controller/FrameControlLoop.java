@@ -16,7 +16,7 @@ public class FrameControlLoop extends Thread implements Runnable {
             timeCounterMs = 0, //milliseconds counter
             currentTime  = System.currentTimeMillis();
 
-    public FrameControlLoop(Runnable updater) {
+    FrameControlLoop(Runnable updater) {
         this.updater = updater;
     }
 
@@ -33,7 +33,10 @@ public class FrameControlLoop extends Thread implements Runnable {
                 tics += 1;
                 timeCounterMs = 0;
             }
-
+            try {
+                Thread.sleep(timeFrame - timeCounterMs);
+            } catch (InterruptedException e) {
+            }
             //if statement for FPS loging in console=========
             if (currentTime-startTime>1000){
                 System.out.println("FPS: "+tics);
@@ -43,5 +46,9 @@ public class FrameControlLoop extends Thread implements Runnable {
 
             //===============================================
         }
+    }
+
+    void toggleLoopState() {
+        isRunning = !isRunning;
     }
 }
